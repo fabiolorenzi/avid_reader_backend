@@ -14,6 +14,32 @@ namespace AvidReaderBackend.Controllers
             _db = db;
         }
 
+        [HttpPost]
+        public IActionResult Create(User _user)
+        {
+            if (ModelState.IsValid)
+            {
+                _db.Users.Add(_user);
+                _db.SaveChanges();
+                return Ok(_user);
+            }
+            return BadRequest();
+        }
+
+        [HttpDelete]
+        public IActionResult Delete(int _id)
+        {
+            var targetUser = _db.Users.Find(_id);
+
+            if (targetUser == null)
+            {
+                return NotFound();
+            }
+            _db.Users.Remove(targetUser);
+            _db.SaveChanges();
+            return Ok();
+        }
+
         [HttpPatch]
         public IActionResult Login(string _username, string _password)
         {
