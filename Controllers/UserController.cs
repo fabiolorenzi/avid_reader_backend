@@ -41,12 +41,12 @@ namespace AvidReaderBackend.Controllers
         }
 
         [HttpPatch]
-        public IActionResult Login(string _username, string _password)
+        public IActionResult Login(User _user)
         {
             IEnumerable<User> users = _db.Users;
             foreach (User user in users)
             {
-                if (user.Username == _username && user.Password == _password)
+                if (user.Username == _user.Username && user.Password == _user.Password)
                 {
                     return Ok(user);
                 }

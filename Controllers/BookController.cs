@@ -14,7 +14,7 @@ namespace AvidReaderBackend.Controllers
             _db = db;
         }
 
-        [HttpGet("Get")]
+        [HttpGet]
         public IActionResult GetAll([FromQuery(Name = "filter")] string? filterQuery, [FromQuery(Name = "user")] int userId)
         {
             IEnumerable<Book> books = _db.Books.Where(book => book.UserId == userId);
@@ -30,7 +30,7 @@ namespace AvidReaderBackend.Controllers
             return Ok(books);
         }
 
-        [HttpGet("Get/{_id}")]
+        [HttpGet("{_id}")]
         public IActionResult GetById(int _id)
         {
             var targetBook = _db.Books.Find(_id);
@@ -65,7 +65,7 @@ namespace AvidReaderBackend.Controllers
             return BadRequest();
         }
 
-        [HttpDelete]
+        [HttpDelete("{_id}")]
         public IActionResult Delete(int _id)
         {
             var targetBook = _db.Books.Find(_id);
