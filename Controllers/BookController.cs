@@ -15,9 +15,18 @@ namespace AvidReaderBackend.Controllers
         }
 
         [HttpGet("Get")]
-        public IActionResult GetAll()
+        public IActionResult GetAll([FromQuery(Name = "filter")] string? filterQuery, [FromQuery(Name = "user")] int userId)
         {
-            IEnumerable<Book> books = _db.Books;
+            IEnumerable<Book> books = _db.Books.Where(book => book.UserId == userId);
+            
+            if (filterQuery != null)
+            {
+                var filteredBooks = books.Where(book => 
+                    book.Author.ToLower().Contains(filterQuery.ToLower()) || 
+                    book.Title.ToLower().Contains(filterQuery.ToLower())
+                );
+                return Ok(filteredBooks);
+            }
             return Ok(books);
         }
 
