@@ -2,6 +2,7 @@ using AvidReaderBackend.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// This code here is to create a CORS policy
 builder.Services.AddCors(options => {
     options.AddPolicy(
         name: "_allowances",
@@ -23,6 +24,7 @@ builder.Services.AddDbContext<ApplicationDBContext>();
 
 var app = builder.Build();
 
+// This code here is to run the validation policy created above
 app.UseCors("_allowances");
 
 app.UseSwagger();
